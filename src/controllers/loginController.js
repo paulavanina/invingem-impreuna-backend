@@ -15,7 +15,7 @@ const loginController=async(req,res)=>{
       }
   
       if (result.recordset.length === 0) {
-        return res.status(400).json({ Error: "Utilizatorul nu a fost gasit." });
+        return res.status(404).json({ Error: "Utilizatorul nu a fost gasit." });
       }
   
     const user=result.recordset[0];

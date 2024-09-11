@@ -8,7 +8,7 @@ const blogController= async ( req,res) => {
    
     request.query(blogSql, (err, result) => {
       if (err) {
-        return res.status(500).json({ Error: "Eroare la inserarea datelor." });
+        return res.status(400).json({ Error: "Eroare la inserarea datelor." });
       }
       return res.status(200).json({ Status: "Datele au fost adaugate cu succes in bd." });
     });
