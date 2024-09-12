@@ -11,6 +11,7 @@ import signupRoute from "./src/routes/signupRoute.js"
 import loginRoute from "./src/routes/loginRoute.js"
 import userProfileRoute from "./src/routes/userProfileRoute.js"
 
+
 dotenv.config();
 const app = express()
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use('/', blogRoute)
 app.use('/', signupRoute)
 app.use('/', loginRoute)
 app.use('/', userProfileRoute)
+
 process.on("uncaughtException", (err) => console.error(err))
 
 app.listen(PORT, () => {
