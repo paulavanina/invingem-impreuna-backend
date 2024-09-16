@@ -2,7 +2,7 @@ import mssql from 'mssql'
 import { Result } from "express-validator";
 import jwt from 'jsonwebtoken'
 
-const blogController= async ( req,res) => {
+const createBlogController= async ( req,res) => {
 try{
   const authHeader=req.headers['authorization'];
     const token=authHeader&&authHeader.split(' ')[1];
@@ -37,4 +37,4 @@ try{
 }
 };
 
-  export default blogController;
+  export default createBlogController;
