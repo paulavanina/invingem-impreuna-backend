@@ -1,44 +1,49 @@
-import express, { request } from "express"
-import mssql from 'mssql'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import dotenv from 'dotenv';
-const signupController=async(req,res)=>{
-    const salt=10;
-    const sql = "INSERT INTO users (userUUID, nume, prenume, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @email, @parola)";
+import express, { request } from "express";
+import mssql from "mssql";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+const signupController = async (req, res) => {
+  const salt = 10;
+  const sql =
+    "INSERT INTO users (userUUID, nume, prenume, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @email, @parola)";
   const sqlEmail = "SELECT email FROM users WHERE email = @email";
 
   //verificare email-ului
   const emailRequest = new mssql.Request();
-  emailRequest.input('email', mssql.VarChar, req.body.email);
+  emailRequest.input("email", mssql.VarChar, req.body.email);
 
   emailRequest.query(sqlEmail, (err, result) => {
     if (err) {
-    return res.status(500).json({ Error: "Eeroare la verificarea emailului." });
+      return res
+        .status(500)
+        .json({ Error: "Eeroare la verificarea emailului." });
     }
     if (result.recordset.length > 0) {
       return res.status(400).json({ Error: "acest email a fost utilizat." });
     }
-    
+
     bcrypt.hash(req.body.parola, salt, (err, hash) => {
       if (err) {
-      return res.status(500).json({ Error: "Eroare la hash-are parolei." });
+        return res.status(500).json({ Error: "Eroare la hash-are parolei." });
       }
 
       const request = new mssql.Request();
-      request.input('nume', mssql.VarChar, req.body.nume);
-      request.input('prenume', mssql.VarChar, req.body.prenume);
-      request.input('email', mssql.VarChar, req.body.email);
-      request.input('parola', mssql.VarChar, hash);
+      request.input("nume", mssql.VarChar, req.body.nume);
+      request.input("prenume", mssql.VarChar, req.body.prenume);
+      request.input("email", mssql.VarChar, req.body.email);
+      request.input("parola", mssql.VarChar, hash);
 
       request.query(sql, (err, result) => {
         if (err) {
-          return res.status(500).json({ Error: "Eroare la inserarea datelor." });
+          return res
+            .status(500)
+            .json({ Error: "Eroare la inserarea datelor." });
         }
         return res.status(200).json({ Status: "Cont creat cu succes!" });
       });
     });
   });
-}
+};
 
 export default signupController;

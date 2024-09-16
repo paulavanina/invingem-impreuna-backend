@@ -1,10 +1,9 @@
-import blogDetailsController from "../controllers/blogDetailsController.js";
-import { Router } from "express"
+import fetchBlogDetailsController from "../controllers/fetchBlogDetailsController.js";
+import { Router } from "express";
 
-const blogDetailsRoute=Router()
+const blogDetailsRoute = Router();
 
-blogDetailsRoute.get("/blog-details", (req,res)=>{
-    return blogDetailsController(req,res);
-  })
-  export default blogDetailsRoute;
-  
+blogDetailsRoute.get("/blog-details", (req, res) => {
+  return fetchBlogDetailsController(req, res);
+});
+export default blogDetailsRoute;
