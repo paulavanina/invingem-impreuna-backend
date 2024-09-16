@@ -4,6 +4,6 @@ import { Router } from "express";
 const blogDetailsRoute = Router();
 
 blogDetailsRoute.get("/blog-details", (req, res) => {
-  return fetchBlogDetailsController(req, res);
+  fetchBlogDetailsController(req, res);
 });
 export default blogDetailsRoute;

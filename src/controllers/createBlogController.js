@@ -18,12 +18,11 @@ const createBlogController = async (req, res) => {
       const userUUID = user.id;
 
       const blogSql =
-        "INSERT INTO blogs (blog_id, userUUID, titlu, descriere, img ) OUTPUT Inserted.blog_id VALUES (NEWID(), @userUUID, @titlu, @descriere, @img)";
+        "INSERT INTO blogs (blog_id, userUUID, titlu, descriere) OUTPUT Inserted.blog_id VALUES (NEWID(), @userUUID, @titlu, @descriere)";
       const request = new mssql.Request();
 
       request.input("titlu", mssql.VarChar, req.body.titlu);
       request.input("descriere", mssql.Text, req.body.descriere);
-      request.input("img", mssql.VarChar, req.body.img);
       request.input("userUUID", mssql.UniqueIdentifier, userUUID);
 
       request.query(blogSql, (err, result) => {
@@ -38,7 +37,7 @@ const createBlogController = async (req, res) => {
       });
     });
   } catch (error) {
-    return res.status(200).json({ Error: "a aparut o eroare" });
+    return res.status(400).json({ Error: "a aparut o eroare" });
   }
 };
 

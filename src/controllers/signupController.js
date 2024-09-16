@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 const signupController = async (req, res) => {
   const salt = 10;
+
+  const { nume, prenume, email, parola } = req.body;
   const sql =
     "INSERT INTO users (userUUID, nume, prenume, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @email, @parola)";
   const sqlEmail = "SELECT email FROM users WHERE email = @email";
@@ -23,15 +25,15 @@ const signupController = async (req, res) => {
       return res.status(400).json({ Error: "acest email a fost utilizat." });
     }
 
-    bcrypt.hash(req.body.parola, salt, (err, hash) => {
+    bcrypt.hash(parola, salt, (err, hash) => {
       if (err) {
         return res.status(500).json({ Error: "Eroare la hash-are parolei." });
       }
 
       const request = new mssql.Request();
-      request.input("nume", mssql.VarChar, req.body.nume);
-      request.input("prenume", mssql.VarChar, req.body.prenume);
-      request.input("email", mssql.VarChar, req.body.email);
+      request.input("nume", mssql.VarChar, nume);
+      request.input("prenume", mssql.VarChar, prenume);
+      request.input("email", mssql.VarChar, email);
       request.input("parola", mssql.VarChar, hash);
 
       request.query(sql, (err, result) => {
