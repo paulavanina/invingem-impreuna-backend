@@ -15,7 +15,7 @@ const fetchBlogDetailsController = async (req, res) => {
       }
       const userUUID = user.id;
       const sql =
-        "SELECT blog_id, titlu, descriere from blogs WHERE userUUID=@userUUID";
+        "SELECT blogs.blog_id, blogs.titlu, blogs.descriere, blogs.picture, users.nume, users.prenume, users.avatar from blogs inner join users on blogs.userUUID=users.userUUID WHERE users.userUUID=@userUUID";
       const request = new mssql.Request();
 
       request.input("userUUID", mssql.UniqueIdentifier, userUUID);
@@ -30,7 +30,16 @@ const fetchBlogDetailsController = async (req, res) => {
             .status(404)
             .json({ Error: "utilizatorul nu a fost gasit" });
         }
-        return res.status(200).json(result.recordset);
+        const blogs = result.recordset.map((blog) => {
+          return {
+            ...blog,
+            picture: blog.picture
+              ? blog.picture.toString("base64") // cnvertim imaginea binara in base64
+              : null,
+            avatar: blog.avatar ? blog.avatar.toString("base64") : null,
+          };
+        });
+        return res.status(200).json(blogs);
       });
     });
   } catch (error) {
