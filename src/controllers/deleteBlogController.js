@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const storage = multer.memoryStorage();
 export const upload = multer({ storage: storage });
 
-const createBlogController = async (req, res) => {
+const deleteBlogController = async (req, res) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -21,23 +21,20 @@ const createBlogController = async (req, res) => {
       }
       const userUUID = user.id;
 
-      const { titlu, descriere } = req.body;
-      const imageBuffer = req.file.buffer; // img sub forma de buffer
+      const { blog_id } = req.body;
 
-      const blogSql =
-        "INSERT INTO blogs (blog_id, userUUID, titlu, descriere, picture) OUTPUT Inserted.blog_id VALUES (NEWID(), @userUUID, @titlu, @descriere, @picture)";
+      const deleteBlogSql =
+        "DELETE FROM blogs WHERE blog_id=@blog_id and userUUID=@userUUID";
       const request = new mssql.Request();
 
-      request.input("titlu", mssql.VarChar, titlu);
-      request.input("descriere", mssql.Text, descriere);
+      request.input("blog_id", mssql.VarChar, blog_id);
       request.input("userUUID", mssql.UniqueIdentifier, userUUID);
-      request.input("picture", mssql.VarBinary, imageBuffer);
 
-      request.query(blogSql, (err, result) => {
+      request.query(deleteBlogSql, (err, result) => {
         if (err) {
           return res
             .status(400)
-            .json({ Error: "Eroare la inserarea datelor." });
+            .json({ Error: "Eroare la stergerea datelor." });
         }
         return res
           .status(200)
@@ -49,4 +46,4 @@ const createBlogController = async (req, res) => {
   }
 };
 
-export default createBlogController;
+export default deleteBlogController;

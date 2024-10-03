@@ -14,7 +14,7 @@ const userProfileController = async (req, res) => {
     }
     const userUUID = user.id;
     const sql =
-      "SELECT nume, prenume, email from users WHERE userUUID=@userUUID";
+      "SELECT nume, prenume, avatar, email from users WHERE userUUID=@userUUID";
     const request = new mssql.Request();
     request.input("userUUID", mssql.VarChar, userUUID);
 
@@ -26,7 +26,17 @@ const userProfileController = async (req, res) => {
       if (result.recordset.length === 0) {
         return res.status(404).json({ Error: "utilizatorul nu a fost gasit" });
       }
-      return res.status(200).json(result.recordset[0]);
+      const userProfile = result.recordset[0];
+      const pictureBase64 = userProfile.avatar
+        ? userProfile.avatar.toString("base64")
+        : null;
+      const userResponse = {
+        nume: userProfile.nume,
+        prenume: userProfile.prenume,
+        email: userProfile.email,
+        avatar: pictureBase64,
+      };
+      return res.status(200).json(userResponse);
     });
   });
 };
