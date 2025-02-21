@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read # Required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -23,15 +23,19 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Install zip utility
+        run: choco install zip -y --no-progress
+
+      - name: Verify zip installation
+        run: zip --version
+
       - name: npm install and build (only production dependencies)
         run: |
           npm install --production
           npm run build --if-present
           npm prune --production
-          zip -r deploy.zip . -x "node_modules/*" "tests/*" ".git/*"
-      
-          
-      
+          zip -r deploy.zip . -x "node_modules/**" "tests/**" ".git/**"
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -45,8 +49,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write # Required for requesting the JWT
+      contents: read # Required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -67,5 +71,4 @@ jobs:
         with:
           app-name: 'backend-ii'
           slot-name: 'Production'
-          package: deploy.zip
-          
+          package: node-app/deploy.zip
