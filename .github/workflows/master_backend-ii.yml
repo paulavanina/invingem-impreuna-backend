@@ -31,10 +31,13 @@ jobs:
           npm install --production
           npm run build --if-present
           npm prune --production
-          zip -r deploy.zip . -x "node_modules/**" "tests/**" ".git/**"
+          zip -r deploy.zip * -x "node_modules/**" "tests/**" ".git/**"
 
-      - name: List files after zip
-        run: dir
+      - name: Show ZIP contents
+        run: unzip -l deploy.zip
+
+      - name: Verify ZIP file
+        run: unzip -t deploy.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -62,12 +65,9 @@ jobs:
       - name: List files after download
         run: ls -l
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E27FECEB95FC480F84C780BEE9BC9EBE }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D96FEBE1A212485A917F1B2E63695FAD }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4FB3F272865C4A0887F3FC8E4E5EE6AF }}
+      - name: Enable build during deployment
+        run: |
+          az webapp config appsettings set --resource-group myResourceGroup --name backend-ii --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -75,4 +75,4 @@ jobs:
         with:
           app-name: 'backend-ii'
           slot-name: 'Production'
-          package: deploy.zip 
+          package: deploy.zip
