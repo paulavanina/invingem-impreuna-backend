@@ -19,14 +19,18 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 app.use(
   cors({
-    origin: "*",
+    origin: "https://invingem-impreuna.vercel.app",
     credentials: true,
     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
   })
 );
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  next();
+});
 app.use(bodyParser.json());
 app.use("/", dbConnectionRoutes);
 app.use("/", signupRoute);

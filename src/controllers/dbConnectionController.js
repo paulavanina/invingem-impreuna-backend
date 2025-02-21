@@ -1,6 +1,6 @@
 import { runQuery } from "../utils/function.js";
 const dbConnectionController = async (req, res) => {
-  const dbQuery = "SELECT TOP (10) * FROM [dbo].[users]";
+  const dbQuery = "SELECT TOP (10) * FROM [dbo].[Users]";
   runQuery(dbQuery)
     .then((dbRes) => {
       res
