@@ -4,7 +4,7 @@ import mssql from "mssql";
 const fetchBlogsController = async (req, res) => {
   try {
     const sql =
-      "SELECT blogs.blog_id, blogs.titlu, blogs.descriere, blogs.picture, users.nume, users.prenume, users.avatar FROM [dbo].[blogs] INNER JOIN users on blogs.userUUID=users.userUUID";
+      "SELECT blogs.blog_id, blogs.titlu, blogs.descriere, blogs.picture, Users.nume, Users.prenume, Users.avatar FROM [dbo].[blogs] INNER JOIN Users on blogs.userUUID=Users.userUUID";
     const request = new mssql.Request();
 
     request.query(sql, (err, result) => {

@@ -13,8 +13,8 @@ const signupController = async (req, res) => {
   const { nume, prenume, email, parola } = req.body;
   const imageBuffer = req.file.buffer;
   const sql =
-    "INSERT INTO users (userUUID, nume, prenume, avatar, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola)";
-  const sqlEmail = "SELECT email FROM users WHERE email = @email";
+  "INSERT INTO Users (userUUID, nume, prenume, avatar, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola)";
+const sqlEmail = "SELECT email FROM users WHERE email = @email";
 
   //verificare email-ului
   const emailRequest = new mssql.Request();
