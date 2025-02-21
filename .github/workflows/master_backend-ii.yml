@@ -67,7 +67,7 @@ jobs:
 
       - name: Enable build during deployment
         run: |
-          az webapp config appsettings set --resource-group myResourceGroup --name backend-ii --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+          az webapp config appsettings set --resource-group backend --name backend-ii --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
