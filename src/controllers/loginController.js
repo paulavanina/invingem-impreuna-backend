@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 const loginController = async (req, res) => {
   const { email, parola } = req.body;
-  const sqlLogIn = "SELECT * FROM users WHERE email = @email";
+  const sqlLogIn = "SELECT * FROM Users WHERE email = @email";
 
   const request = new mssql.Request();
   request.input("email", mssql.VarChar, email);

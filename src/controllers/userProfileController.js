@@ -14,7 +14,7 @@ const userProfileController = async (req, res) => {
     }
     const userUUID = user.id;
     const sql =
-      "SELECT nume, prenume, avatar, email from users WHERE userUUID=@userUUID";
+      "SELECT nume, prenume, avatar, email from Users WHERE userUUID=@userUUID";
     const request = new mssql.Request();
     request.input("userUUID", mssql.VarChar, userUUID);
 

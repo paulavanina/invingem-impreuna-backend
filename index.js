@@ -27,6 +27,10 @@ app.use(
     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
   })
 );
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  next();
+});
 app.use(bodyParser.json());
 app.use("/", dbConnectionRoutes);
 app.use("/", signupRoute);

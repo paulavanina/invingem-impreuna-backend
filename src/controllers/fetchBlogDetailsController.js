@@ -15,7 +15,7 @@ const fetchBlogDetailsController = async (req, res) => {
       }
       const userUUID = user.id;
       const sql =
-        "SELECT blogs.blog_id, blogs.titlu, blogs.descriere, blogs.picture, users.nume, users.prenume, users.avatar from blogs inner join users on blogs.userUUID=users.userUUID WHERE users.userUUID=@userUUID";
+        "SELECT blogs.blog_id, blogs.titlu, blogs.descriere, blogs.picture, Users.nume, Users.prenume, Users.avatar from blogs inner join Users on blogs.userUUID=Users.userUUID WHERE Users.userUUID=@userUUID";
       const request = new mssql.Request();
 
       request.input("userUUID", mssql.UniqueIdentifier, userUUID);
