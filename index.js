@@ -22,7 +22,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 8080;
 app.use(
   cors({
-    origin: "*",
+    origin: true,
     credentials: true,
     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
   })
