@@ -1,4 +1,4 @@
-# Backend Repoistory
+# Backend Repository
 Acest repository conține codul sursă pentru backend-ul aplicației web dedicate pacienților care suferă de cancer. Backend-ul gestionează autentificarea, operațiile CRUD și oferă API-urile necesare pentru funcționarea frontend-ului. 
 
 # Tehnologii utilizate
