@@ -1,11 +1,11 @@
 # Backend Repoistory
-Acest repository contine codul sursa pentru backend-ul aplicatiei web dedicate pacientilor care sufera de cancer. Backend-ul gestioneaza autentificarea, operatiile CRUD si ofera API-urile necesare pentru functionarea frontend-ului. 
+Acest repository conține codul sursă pentru backend-ul aplicației web dedicate pacienților care suferă de cancer. Backend-ul gestionează autentificarea, operațiile CRUD și oferă API-urile necesare pentru funcționarea frontend-ului. 
 
 # Tehnologii utilizate
--Backend: Node.js
--Baza de date: Azure
--Hosting: Railway
--Securitate: Criptarea parolelor 
+- Backend: Node.js
+- Baza de date: Azure
+- Hosting: Railway
+- Securitate: Criptarea parolelor 
 
 # Functionalitati 
 - **Autentificare și înregistrare**: Gestionarea creării conturilor și autentificării utilizatorilor folosind JWT.
