@@ -28,8 +28,8 @@ const createBlogController = async (req, res) => {
         "INSERT INTO blogs (blog_id, userUUID, titlu, descriere, picture) OUTPUT Inserted.blog_id VALUES (NEWID(), @userUUID, @titlu, @descriere, @picture)";
       const request = new mssql.Request();
 
-      request.input("titlu", mssql.VarChar, titlu);
-      request.input("descriere", mssql.Text, descriere);
+      request.input("titlu", mssql.NVarChar(255), titlu);
+      request.input("descriere", mssql.NVarChar(mssql.MAX), descriere);
       request.input("userUUID", mssql.UniqueIdentifier, userUUID);
       request.input("picture", mssql.VarBinary, imageBuffer);
 

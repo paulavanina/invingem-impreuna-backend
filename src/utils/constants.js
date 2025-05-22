@@ -15,6 +15,7 @@ const DATABASE_CREDENTIALS = {
   password,
   options: {
     encrypt: true,
+    charset: 'utf8'
   },
 }
 
