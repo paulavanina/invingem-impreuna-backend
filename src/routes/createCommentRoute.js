@@ -2,7 +2,7 @@ import { Router } from "express";
 import createCommentController from "../controllers/createCommentController.js";
 
 const createCommentRoute = Router();
-createBlogRoute.post("/comment", (req, res) => {
+createCommentRoute.post("/comment", (req, res) => {
     createCommentController(req, res);
 });
 
