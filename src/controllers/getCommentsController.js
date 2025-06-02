@@ -4,7 +4,7 @@ const getCommentsController = async (req, res) => {
   const { blog_id } = req.query;
   try {
     const sql =
-      (`SELECT c.comment_id, c.comment, c.created_at, c.blog_id, u.nume, u.prenume, u.avatar
+      (`SELECT c.comment_id, c.comment, c.created_at, c.user_id, c.blog_id, u.nume, u.prenume, u.avatar
       FROM comments c INNER JOIN Users u ON c.user_id = u.userUUID
       WHERE c.blog_id = @blog_id
       ORDER BY c.created_at DESC;
