@@ -1,7 +1,6 @@
 import mssql from "mssql";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 const loginController = async (req, res) => {
   const { email, parola } = req.body;
   const sqlLogIn = "SELECT * FROM Users WHERE email = @email";
@@ -31,7 +30,7 @@ const loginController = async (req, res) => {
       }
       //se genereaza token
       const token = jwt.sign(
-        { id: user.userUUID, email: user.email },
+        { id: user.userUUID, email: user.email, role: user.role },
         process.env.SECRET_TOKEN,
         { expiresIn: "1h" }
       );
