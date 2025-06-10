@@ -14,6 +14,8 @@ import deleteBlogRoute from "./src/routes/deleteBlogRoute.js";
 import createCommentRoute from "./src/routes/createCommentRoute.js";
 import getCommentsRoute from "./src/routes/getCommentsRoute.js";
 import deleteCommentRoute from "./src/routes/deleteCommentRoute.js";
+import deleteUserRoute from "./src/routes/deleteUserRoute.js";
+import fetchUsersRoute from "./src/routes/fetchUsersRoute.js";
 
 dotenv.config();
 const app = express();
@@ -44,6 +46,9 @@ app.use("/", fetchBlogsPageRoute);
 app.use("/", createCommentRoute);
 app.use("/", getCommentsRoute);
 app.use("/", deleteCommentRoute);
+app.use("/", deleteBlogRoute);
+app.use("/", deleteUserRoute);
+app.use("/", fetchUsersRoute);
 process.on("uncaughtException", (err) => console.error(err));
 
 app.listen(PORT, () => {
