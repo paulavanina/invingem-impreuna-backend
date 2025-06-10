@@ -1,5 +1,4 @@
 import mssql from "mssql";
-import jwt from "jsonwebtoken";
 
 const deleteUserController = async (req, res) => {
     try {
