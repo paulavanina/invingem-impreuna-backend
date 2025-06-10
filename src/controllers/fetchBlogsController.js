@@ -1,5 +1,3 @@
-import { Result } from "express-validator";
-import jwt from "jsonwebtoken";
 import mssql from "mssql";
 const fetchBlogsController = async (req, res) => {
   try {
