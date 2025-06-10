@@ -1,8 +1,6 @@
 import express, { request } from "express";
 import mssql from "mssql";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 import multer from "multer";
 const storage = multer.memoryStorage();
 export const upload = multer({ storage: storage });
@@ -13,8 +11,8 @@ const signupController = async (req, res) => {
   const { nume, prenume, email, parola } = req.body;
   const imageBuffer = req.file.buffer;
   const sql =
-  "INSERT INTO Users (userUUID, nume, prenume, avatar, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola)";
-const sqlEmail = "SELECT email FROM users WHERE email = @email";
+    "INSERT INTO Users (userUUID, nume, prenume, avatar, email, parola, role) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola, @role)";
+  const sqlEmail = "SELECT email FROM users WHERE email = @email";
 
   //verificare email-ului
   const emailRequest = new mssql.Request();
@@ -41,7 +39,7 @@ const sqlEmail = "SELECT email FROM users WHERE email = @email";
       request.input("avatar", mssql.VarBinary, imageBuffer);
       request.input("email", mssql.VarChar, email);
       request.input("parola", mssql.VarChar, hash);
-
+      request.input("role", mssql.VarChar, role);
       request.query(sql, (err, result) => {
         if (err) {
           return res
