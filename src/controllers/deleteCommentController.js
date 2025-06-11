@@ -1,9 +1,5 @@
-import multer from "multer";
 import mssql from "mssql";
 import jwt from "jsonwebtoken";
-
-const storage = multer.memoryStorage();
-export const upload = multer({ storage: storage });
 
 const deleteCommentController = async (req, res) => {
     try {
