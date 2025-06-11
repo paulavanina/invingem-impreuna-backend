@@ -1,5 +1,5 @@
 import { Router } from "express";
-import fetchUsersController from "../controllers/fetchBlogsController.js";
+import fetchUsersController from "../controllers/fetchUsersController.js";
 const fetchUsersRoute = Router();
 
 fetchUsersRoute.get("/users", (req, res) => {
