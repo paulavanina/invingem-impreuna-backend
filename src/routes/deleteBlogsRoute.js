@@ -1,5 +1,5 @@
 import { Router } from "express";
-import deleteBlogsController from "../controllers/deleteBlogController.js";
+import deleteBlogsController from "../controllers/deleteBlogsController.js";
 
 const deleteBlogsRoute = Router();
 deleteBlogsRoute.delete(`/blogs/:blog_id`, (req, res) => {

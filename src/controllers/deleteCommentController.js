@@ -1,6 +1,5 @@
 import mssql from "mssql";
 import jwt from "jsonwebtoken";
-
 const deleteCommentController = async (req, res) => {
     try {
         const authHeader = req.headers["authorization"];
