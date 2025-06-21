@@ -1,3 +1,4 @@
+import mssql from "mssql";
 const updateUserRoleController = async (req, res) => {
     const { id } = req.params;
     const { role } = req.body;
