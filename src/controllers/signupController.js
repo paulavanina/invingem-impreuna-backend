@@ -1,4 +1,4 @@
-import express, { request } from "express";
+import express from "express";
 import mssql from "mssql";
 import bcrypt from "bcrypt";
 import multer from "multer";
@@ -11,7 +11,7 @@ const signupController = async (req, res) => {
   const { nume, prenume, email, parola } = req.body;
   const imageBuffer = req.file.buffer;
   const sql =
-    "INSERT INTO Users (userUUID, nume, prenume, avatar, email, parola, role) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola, @role)";
+    "INSERT INTO Users (userUUID, nume, prenume, avatar, email, parola) OUTPUT Inserted.userUuid VALUES (NEWID(), @nume, @prenume, @avatar, @email, @parola)";
   const sqlEmail = "SELECT email FROM users WHERE email = @email";
 
   //verificare email-ului
@@ -22,7 +22,7 @@ const signupController = async (req, res) => {
     if (err) {
       return res
         .status(500)
-        .json({ Error: "Eeroare la verificarea emailului." });
+        .json({ Error: "Eroare la verificarea emailului." });
     }
     if (result.recordset.length > 0) {
       return res.status(400).json({ Error: "acest email a fost utilizat." });
@@ -39,7 +39,6 @@ const signupController = async (req, res) => {
       request.input("avatar", mssql.VarBinary, imageBuffer);
       request.input("email", mssql.VarChar, email);
       request.input("parola", mssql.VarChar, hash);
-      request.input("role", mssql.VarChar, role);
       request.query(sql, (err, result) => {
         if (err) {
           return res
