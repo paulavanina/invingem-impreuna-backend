@@ -1,8 +1,9 @@
+import mssql from "mssql";
 
 const updateProfileController = async (req, res) => {
   const { nume, prenume, email } = req.body;
-  const userUUID = req.user.userUUID;
   const avatar = req.file;
+  const userUUID = req.body.userUUID;
   try {
     const request = new mssql.Request();
     request.input("nume", nume || null);
@@ -10,21 +11,20 @@ const updateProfileController = async (req, res) => {
     request.input("email", email || null);
     request.input("userUUID", mssql.UniqueIdentifier, userUUID);
 
-    const updateProfileSQL = `
-    UPDATE Users
+    let updateProfileSQL = `
+      UPDATE Users
       SET
         nume = COALESCE(@nume, nume),
         prenume = COALESCE(@prenume, prenume),
         email = COALESCE(@email, email)
-      WHERE userUUID = @userUUID
     `;
-    if (picture) {
-      request.input("avatar", mssql.VarBinary, picture.buffer);
-      updateBlogSQL += `,
-                    avatar = @avatar`;
+
+    if (avatar) {
+      request.input("avatar", mssql.VarBinary, avatar.buffer);
+      updateProfileSQL += `, avatar = @avatar`;
     }
-    updateBlogSQL += `
-                WHERE blog_id = @blog_id`;
+
+    updateProfileSQL += ` WHERE userUUID = @userUUID`;
 
     await request.query(updateProfileSQL);
 
@@ -34,4 +34,5 @@ const updateProfileController = async (req, res) => {
     res.status(500).json({ error: "Eroare internă la actualizarea profilului." });
   }
 };
+
 export default updateProfileController;
