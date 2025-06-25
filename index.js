@@ -20,6 +20,7 @@ import updateUserRoleRoute from "./src/routes/updateUserRoleRoute.js";
 import chatbotRoute from "./src/routes/chatbotRoute.js";
 import updateProfileRoute from "./src/routes/updateProfileRoute.js";
 import updateBlogRoute from "./src/routes/updateBlogRoute.js";
+import deleteBlogsRoute from "./src/routes/deleteBlogsRoute.js";
 
 dotenv.config();
 const app = express();
@@ -56,6 +57,7 @@ app.use("/", updateUserRoleRoute);
 app.use("/", chatbotRoute);
 app.use("/", updateProfileRoute);
 app.use("/", updateBlogRoute);
+app.use("/", deleteBlogsRoute);
 process.on("uncaughtException", (err) => console.error(err));
 
 app.listen(PORT, () => {

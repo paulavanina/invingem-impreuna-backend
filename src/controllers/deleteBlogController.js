@@ -38,7 +38,7 @@ const deleteBlogController = async (req, res) => {
         }
         return res
           .status(200)
-          .json({ Status: "Datele au fost adaugate cu succes in bd." });
+          .json({ Status: "Blogul a fost sters cu succes." });
       });
     });
   } catch (error) {
