@@ -5,7 +5,9 @@ Acest repository conține codul sursă pentru backend-ul aplicației web dedicat
 - Backend: Node.js
 - Baza de date: Azure
 - Hosting: Railway
-- Securitate: Criptarea parolelor 
+- Securitate: Criptarea parolelor (bcrypt), autentificare cu JWT
+- OpenAI API pentru implementarea chatbot-ului
+
 
 # Functionalitati 
 - **Autentificare și înregistrare**: Gestionarea creării conturilor și autentificării utilizatorilor folosind JWT.
